@@ -1,0 +1,53 @@
+---
+
+- block:
+  - name: Install httpd server
+    yum:
+      name: "{{ httpd_packages }}"
+      state: present
+
+  - stat:
+      path: "{{ item.site_directory }}"
+    register: p
+    loop: "{{ http_sites }}"
+
+  - name: Creeate a basic content
+    copy:
+      content: 'Hello to {{ item.site_name }} '
+      dest: "{{ item.site_directory }}/index.html"
+      owner: "{{ item.user }}"
+      group: "{{ item.user_group }}"
+      mode: '0644'
+    loop: "{{ http_sites }}"
+#    when: p.stat.isdir is defined and p.stat.isdir
+  
+  - name: Create configuration files
+    template:
+      src: "{{ item.template_file }}"
+      dest: "{{ item.config_file }}"
+    loop: "{{ httpd_configs }}"
+#    notify:
+#      - Start httpd
+
+  - name: Allow Apache listen ports
+    seport:
+      ports: "{{ item.port }}"
+      proto: tcp
+      setype: http_port_t
+      state: "{{ item.state }}"
+    loop: "{{ http_sites }}"
+
+  - name: Activate ports on firewalls
+    firewalld:
+      port: "{{ item.port }}/tcp"
+      permanent: yes
+      state: enabled
+    loop: "{{ http_sites }}"
+  
+  - name: Start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  become: true
+

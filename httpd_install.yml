@@ -1,0 +1,14 @@
+---
+
+# install 
+- name: Configure primary nameserver
+  hosts: httpd
+  gather_facts: false
+#  vars_files:
+#    - ./credentials
+#
+  roles:
+  - role: httpd_install
+
+
+

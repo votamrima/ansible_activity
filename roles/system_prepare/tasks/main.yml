@@ -1,0 +1,43 @@
+---
+
+- name: Check if site_directory is set correctly
+  assert:
+    that:
+      - item.site_directory is defined
+      - item.site_directory is string
+  loop: "{{ http_sites }}"
+
+- name: Check if port is set correctly
+  assert:
+    that:
+      - item.port is defined
+      - item.port is number
+      - item.port > 0
+      - item.port < 65536
+  loop: "{{ http_sites }}"
+
+- block:
+  - name: Install necessary packages
+    yum:
+      name: "{{ additional_packages }}"
+      state: installed
+
+  - name: Create folders for sites
+    file:
+      path: "{{ item.site_directory }}"
+      state: directory
+      owner: "{{ item.user }}"
+      group: "{{ item.user_group }}"
+    loop: "{{ http_sites }}"
+
+  - name: Set Selinux policy for site location 
+    sefcontext:
+      target: '{{ item.site_directory }}(/.*)?'
+      setype: httpd_sys_content_t
+      state: "{{ item.state }}"
+    loop: "{{ http_sites }}"
+
+  - name: Apply new SELinux file context to folders
+    command: "restorecon -irv {{ item.site_directory }}"
+    loop: "{{ http_sites }}"
+  become: true

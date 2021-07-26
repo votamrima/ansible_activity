@@ -1,0 +1,9 @@
+---
+
+- name: Running http_install playbook
+  include: http_install.yml
+
+- name: Running  http_prepare playbook
+  include: http_prepare.yml
+
+

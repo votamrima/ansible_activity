@@ -1,0 +1,71 @@
+---
+
+- block:
+  - stat:
+      path: "{{ item.site_directory }}"
+    register: p
+    loop: "{{ https_sites }}"
+#    when: https_sites is defined
+
+
+  - name: Create folders for sites
+    include: create_folders.yml
+    loop: "{{ https_sites }}"
+
+  - name: Create folders for sites
+    file:
+      path: "{{ item.dir_certs }}"
+      state: directory
+      owner: "{{ item.user }}"
+      group: "{{ item.user_group }}"
+    loop:
+      - "{{ https_sites }}"
+
+  - name: Creeate a basic content
+    copy:
+      content: 'Hello to {{ item.site_name }} '
+      dest: "{{ item.site_directory }}/index.html"
+      owner: "{{ item.user }}"
+      group: "{{ item.user_group }}"
+      mode: '0644'
+    loop: "{{ https_sites }}"
+
+  - name: Copy certificates
+    copy:
+      src: "{{ item.cert_files }}"
+      dest: "{{ item.dir_certs }}"
+    loop: "{{ https_sites }}"
+#    when: https_sites is defined
+
+  - name: Allow Apache listen https ports
+    seport:
+      ports: "{{ item.port }}"
+      proto: tcp
+      setype: http_port_t
+      state: "{{ item.state }}"
+    loop: "{{ https_sites }}"
+#    when: https_sites is defined
+
+  - name: Activate https ports on firewalls
+    firewalld:
+      port: "{{ item.port }}/tcp"
+      permanent: yes
+      state: enabled
+    loop: "{{ https_sites }}"
+#    when: https_sites is defined
+
+  - name: Start httpd
+    service:
+      name: httpd
+      state: restarted
+  become: true
+
+- block:
+    - name: Copy certificates
+      copy:
+        src: "{{ item.cert_files }}"
+        dest: "{{ item.dir_certs }}"
+      loop: "{{ https_sites }}"
+      when: https_sites is defined
+  become: true
+

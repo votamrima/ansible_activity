@@ -1,0 +1,16 @@
+---
+
+httpd_configs:
+  - template_file: httpd.conf.j2
+    config_file: /etc/httpd/conf/httpd.conf
+  - template_file: directories.conf.j2
+    config_file: /etc/httpd/conf.d/directories.conf
+  - template_file: virtual_hosts.conf.j2
+    config_file: /etc/httpd/conf.d/virtual_hosts.conf
+  - template_file: ssl.conf.j2
+    config_file: /etc/httpd/conf.d/ssl.conf
+
+https_configs:
+  - template_file: virtual_hosts_https.conf.j2
+    config_file: /etc/httpd/conf.d/virtual_hosts_https.conf
+

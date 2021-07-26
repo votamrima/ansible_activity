@@ -1,0 +1,46 @@
+---
+
+# install 
+- name: Configure primary nameserver
+  hosts: httpd
+  gather_facts: false
+#  vars_files:
+#    - ./credentials
+#
+  tasks:
+  - block:
+    - name: Stop httpd
+      service:
+        name: httpd
+        state: stopped
+        enabled: no
+
+    - name: Uninstall httpd server
+      yum:
+        name: "{{ httpd_packages }}"
+        state: absent
+
+    - name: Deactivate ports on firewalls
+      firewalld:
+        port: "{{ item.port }}/tcp"
+        permanent: yes
+        state: disabled
+#      loop:  "{{ http_sites }}"
+      loop:
+        - 8090
+        - 9090
+        - 8843
+        - 9943
+
+    - name: Erase folders for sites
+      file:
+        path: "/opt/httpd" 
+        state: absent
+
+    - name: Remove folder for httpd server
+      file:
+        path: /etc/httpd
+        state: absent
+    become: true
+    ignore_errors: true
+

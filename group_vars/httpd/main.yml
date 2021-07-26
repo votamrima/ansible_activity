@@ -1,0 +1,61 @@
+#
+# Preperation section
+
+ansible-managed: "This file is managed by Ansible"
+
+additional_packages: 
+  - policycoreutils-python-utils
+
+# configuration for httpd
+httpd_packages:
+  - httpd
+  - mod_ssl
+
+#httpd_configs:
+#  - template_file: httpd.conf.j2
+#    config_file: /etc/httpd/conf/httpd.conf
+#  - template_file: directories.conf.j2
+#    config_file: /etc/httpd/conf.d/directories.conf
+#  - template_file: virtual_hosts.conf.j2
+#    config_file: /etc/httpd/conf.d/virtual_hosts.conf
+#  - template_file: ssl.conf.j2
+#    config_file: /etc/httpd/conf.d/ssl.conf.j2
+
+http_sites:
+  - port: 8090
+    site_name: site1
+    site_directory: /opt/httpd/site1
+    user_group: apache
+    user: apache
+    state: present
+  - port: 9090
+    site_name: site2
+    site_directory: /opt/httpd/site2
+    user_group: apache
+    user: apache
+    state: present
+
+https_sites:
+  - port: 8843
+    site_name: site3
+    site_directory: /opt/httpd/site3
+    user_group: apache
+    user: apache
+    state: present
+    cert_files: /opt/votamrima/httpd_install/files/site3
+    dir_certs: /etc/httpd/certs/site3
+    cert_name: site3.crt
+    cert_key: site3.key
+  - port: 9943
+    site_name: site4
+    site_directory: /opt/httpd/site4
+    user_group: apache
+    user: apache
+    state: absent
+    cert_files: /opt/votamrima/httpd_install/files/site4
+    dir_certs: /etc/httpd/certs/site4
+    cert_name: site3.crt
+    cert_key: site3.key
+
+
+

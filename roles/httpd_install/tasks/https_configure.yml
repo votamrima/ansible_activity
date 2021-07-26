@@ -1,0 +1,41 @@
+---
+
+- name: "Create folders {{ item.dir_certs }}"
+  file:
+    path: "{{ item.dir_certs }}"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user_group }}"
+    recurse: true
+
+- name: Copy certificates 
+  synchronize:
+    src: "{{ item.cert_files }}"
+    dest: "{{ item.dir_certs }}"
+
+- name: "Allow Apache listen {{ item.port }} ports"
+  seport:
+    ports: "{{ item.port }}"
+    proto: tcp
+    setype: http_port_t
+    state: "{{ item.state }}"
+#  loop: "{{ https_sites }}"
+
+- name: "Create {{ item.config_file }} "
+  template:
+    src: "{{ item.template_file }}"
+    dest: "{{ item.config_file }}"
+  loop: "{{ https_configs }}"
+
+- name: "Activate {{ item.port }} ports on firewalls"
+  firewalld:
+    port: "{{ item.port }}/tcp"
+    permanent: yes
+    state: enabled
+#  loop: "{{ https_sites }}"
+
+- name: Start httpd
+  service:
+    name: httpd
+    state: restarted
+

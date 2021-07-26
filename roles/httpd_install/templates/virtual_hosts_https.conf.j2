@@ -1,0 +1,25 @@
+
+{% for i in https_sites %}
+Listen {{ i.port }}
+{% endfor %}
+
+
+{% for values in https_sites %}
+
+  <VirtualHost *:{{ values.port }}>
+  #  ServerName www-a.lab.example.com
+    SSLEngine On
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:MEDIUM:!aNull:!MD5
+    SSLHonorCipherOrder on
+    SSLCertificateFile {{ values.dir_certs }}/{{ values.cert_name }}
+    SSLCertificateKeyFile {{ values.dir_certs }}/{{ values.cert_key }}
+  #  SSLCertificateChainFile /etc/pki/tls/certs/cacert.crt
+    CustomLog "logs/{{ values.site_name }}.custom.log" combined
+    ErrorLog "logs/{{ values.site_name }}.error.log"
+    <Directory {{ values.site_directory }}>
+      Require all granted
+    </Directory>
+
+  </VirtualHost>
+{% endfor %}

@@ -1,0 +1,11 @@
+
+{% for values in http_sites %}
+  <VirtualHost *:{{ values.port }}>
+    DocumentRoot {{ values.site_directory }}
+    CustomLog "logs/{{ values.site_name }}.custom.log" combined
+    ErrorLog "logs/{{ values.site_name }}.error.log"
+    <Directory {{ values.site_directory }}>
+      Require all granted
+    </Directory>
+  </VirtualHost>
+{% endfor %}

@@ -1,0 +1,14 @@
+---
+
+# install 
+- name: Prepare the machine
+  hosts: httpd
+  gather_facts: false
+#  vars_files:
+#    - ./credentials
+#
+  roles:
+  - role: system_prepare
+
+
+

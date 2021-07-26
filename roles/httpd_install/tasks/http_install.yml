@@ -1,0 +1,8 @@
+---
+
+- name: Install httpd server
+  yum:
+    name: "{{ httpd_packages }}"
+    state: present
+  become: true
+
