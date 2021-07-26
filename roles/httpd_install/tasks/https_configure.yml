@@ -9,9 +9,10 @@
     recurse: true
 
 - name: Copy certificates 
-  synchronize:
-    src: "{{ item.cert_files }}"
+  copy:
+    src: "{{ item.cert_files }}/"
     dest: "{{ item.dir_certs }}"
+    mode: "0644"
 
 - name: "Allow Apache listen {{ item.port }} ports"
   seport:
@@ -27,6 +28,13 @@
     dest: "{{ item.config_file }}"
   loop: "{{ https_configs }}"
 
+- name: Add https port to httpd.conf
+  lineinfile:
+    line: "Listen {{ item.port }}"
+    path: "{{ httpd_main_conf_file }}"
+    regexp: '^Listen '
+    insertafter: '^Listen '
+
 - name: "Activate {{ item.port }} ports on firewalls"
   firewalld:
     port: "{{ item.port }}/tcp"
@@ -34,7 +42,7 @@
     state: enabled
 #  loop: "{{ https_sites }}"
 
-- name: Start httpd
+- name: Restart httpd
   service:
     name: httpd
     state: restarted

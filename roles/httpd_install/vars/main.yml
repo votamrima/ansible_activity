@@ -1,8 +1,10 @@
 ---
 
+httpd_main_conf_file: /etc/httpd/conf/httpd.conf
+
 httpd_configs:
   - template_file: httpd.conf.j2
-    config_file: /etc/httpd/conf/httpd.conf
+    config_file: "{{ httpd_main_conf_file }}"
   - template_file: directories.conf.j2
     config_file: /etc/httpd/conf.d/directories.conf
   - template_file: virtual_hosts.conf.j2
@@ -13,4 +15,5 @@ httpd_configs:
 https_configs:
   - template_file: virtual_hosts_https.conf.j2
     config_file: /etc/httpd/conf.d/virtual_hosts_https.conf
+
 

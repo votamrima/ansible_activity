@@ -1,9 +1,4 @@
 
-{% for i in https_sites %}
-Listen {{ i.port }}
-{% endfor %}
-
-
 {% for values in https_sites %}
 
   <VirtualHost *:{{ values.port }}>

@@ -1,13 +1,12 @@
 ---
 
-- name: "Create folder for {{ item.site_name }} "
+- name: "Create folder  {{ item.site_directory }} "
   file:
     path: "{{ item.site_directory }}"
     state: directory
     owner: "{{ item.user }}"
     group: "{{ item.user_group }}"
   register: folders_status
-
 
 - name: "Set Selinux policy for {{ item.site_name }}"
   sefcontext:
@@ -17,7 +16,6 @@
 
 - name: "Apply new SELinux file context for {{ item.site_name }}"
   command: "restorecon -irv {{ item.site_directory }}"
-
 
 - name: Creeate a basic content
   copy:

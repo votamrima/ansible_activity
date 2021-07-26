@@ -1,0 +1,10 @@
+---
+
+- name: Copy certificates
+  copy:
+    src: "{{ item.cert_files }}"
+    dest: "{{ item.dir_certs }}"
+    directory_mode: yes
+  loop:
+    - 
+

@@ -7,7 +7,7 @@
   - include: http_configure.yml
     loop: "{{ https_sites }}"
     when: https_sites is defined
-
+#
   - include: https_configure.yml
 #    loop: "{{ https_sites }}"
     when: 
