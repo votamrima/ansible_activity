@@ -1,0 +1,13 @@
+---
+
+nginx_main_conf_file: /etc/nginx/nginx.conf
+
+nginx_configs:
+  - template_file: nginx.conf.j2
+    config_file: "{{ httpd_main_conf_file }}"
+
+https_configs:
+  - template_file: virtual_hosts_https.conf.j2
+    config_file: /etc/httpd/conf.d/virtual_hosts_https.conf
+
+

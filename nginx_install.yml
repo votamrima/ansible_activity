@@ -1,14 +1,14 @@
 ---
 
 # install 
-- name: Configure httpd server
-  hosts: httpd
+- name: Configure Nginx
+  hosts: nginx
   gather_facts: false
 #  vars_files:
 #    - ./credentials
 #
   roles:
-  - role: httpd_install
+  - role: nginx_install
 
 
 

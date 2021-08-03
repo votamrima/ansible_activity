@@ -1,0 +1,53 @@
+---
+
+- name: "Create folder  {{ item.site_directory }} "
+  file:
+    path: "{{ item.site_directory }}"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user_group }}"
+  register: folders_status
+
+- name: "Set Selinux policy for {{ item.site_name }}"
+  sefcontext:
+    target: '{{ item.site_directory }}(/.*)?'
+    setype: httpd_sys_content_t
+    state: "{{ item.state }}"
+
+- name: "Apply new SELinux file context for {{ item.site_name }}"
+  command: "restorecon -irv {{ item.site_directory }}"
+
+- name: Creeate a basic content
+  copy:
+    content: 'Hello to {{ item.site_name }} '
+    dest: "{{ item.site_directory }}/index.html"
+    owner: "{{ item.user }}"
+    group: "{{ item.user_group }}"
+    mode: '0644'
+#    when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Create configuration files
+  template:
+    src: "{{ item.template_file }}"
+    dest: "{{ item.config_file }}"
+  loop: "{{ httpd_configs }}"
+
+- name: "Allow Apache listen {{ item.port }} ports"
+  seport:
+    ports: "{{ item.port }}"
+    proto: tcp
+    setype: http_port_t
+    state: "{{ item.state }}"
+
+- name: "Activate ports on {{ item.port }} firewalls"
+  firewalld:
+    port: "{{ item.port }}/tcp"
+    permanent: yes
+    state: enabled
+
+- name: Start httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+

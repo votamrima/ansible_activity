@@ -1,0 +1,19 @@
+---
+
+- block:
+  - include: nginx_configure.yml
+    loop: "{{ nginx_sites }}"
+
+  - include: http_configure.yml
+    loop: "{{ nginx_sites }}"
+    when: https_sites is defined
+
+  - include: https_configure.yml
+#    loop: "{{ https_sites }}"
+    when:
+      - https_sites is defined
+      - item.state == "present"
+    loop: "{{ https_sites }}"
+
+  become: true
+
