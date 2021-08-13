@@ -7,7 +7,7 @@ dns_packages: bind
 dns_service_name: named
 
 subnets:
-  - subnet: "192.168.11.0/24"
+  - subnet: "192.168.10.0/24"
 
 domain: "home.lab"
 dns_hostname: "dnsserver"
@@ -19,60 +19,60 @@ dns_config_files:
     config_file: /etc/named/named.homelab.conf   
   - template_file: home.lab.zone.j2
     config_file: /var/named/home.lab.zone
-  - template_file: 192.168.11.zone.j2
-    config_file: /var/named/192.168.11.zone
+  - template_file: 192.168.10.zone.j2
+    config_file: /var/named/192.168.10.zone
 
 
 ## It not recommended to use "_". Use "-"
 dns_records:
   - hostname: dnsserver
-    host_ip: 192.168.11.5
+    host_ip: 192.168.10.5
     ip_last_oct: 5
   - hostname: workstation
-    host_ip: 192.168.11.10
+    host_ip: 192.168.10.10
     ip_last_oct: 10
   - hostname: api.okd4
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: 51
   - hostname: api-int.okd4
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: 51
   - hostname: '*.apps.okd4'
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: ;51
   - hostname: oauth-openshift.okd4
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: 51
   - hostname: console-openshift-console.okd4
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: 51
   - hostname: okd4-services.okd4
-    host_ip: 192.168.11.51
+    host_ip: 192.168.10.51
     ip_last_oct: 51
   - hostname: okd4-bootstrap.okd4
-    host_ip: 192.168.11.52
+    host_ip: 192.168.10.52
     ip_last_oct: 52
   - hostname: okd4-control-plane-1.okd4
-    host_ip: 192.168.11.53
+    host_ip: 192.168.10.53
     ip_last_oct: 53
   - hostname: etcd-1.okd4
-    host_ip: 192.168.11.53
+    host_ip: 192.168.10.53
     ip_last_oct: 53
   - hostname: okd4-control-plane-2.okd4
-    host_ip: 192.168.11.54
+    host_ip: 192.168.10.54
     ip_last_oct: 54
   - hostname: etcd-2.okd4
-    host_ip: 192.168.11.54
+    host_ip: 192.168.10.54
     ip_last_oct: 54
   - hostname: okd4-control-plane-3.okd4
-    host_ip: 192.168.11.55
+    host_ip: 192.168.10.55
     ip_last_oct: 55
   - hostname: etcd-3.okd4
-    host_ip: 192.168.11.55
+    host_ip: 192.168.10.55
     ip_last_oct: 55
   - hostname: okd4-compute-1.okd4
-    host_ip: 192.168.11.56
+    host_ip: 192.168.10.56
     ip_last_oct: 56
   - hostname: atest
-    host_ip: 192.168.11.78
+    host_ip: 192.168.10.78
     ip_last_oct: 78    
