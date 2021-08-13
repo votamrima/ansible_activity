@@ -1,0 +1,12 @@
+---
+
+#- name: Running http_install playbook
+#  include: http_install.yml
+#
+- name: Installing dns
+  include: dns_install.yml
+
+#- name: Configuring dns
+#  include: dns_configure.yml
+
+

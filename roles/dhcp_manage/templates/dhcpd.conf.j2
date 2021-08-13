@@ -1,0 +1,20 @@
+authoritative;
+
+{% for i in dhcp_subnets %}
+subnet {{ i.subnet }} netmask {{ i.netmask }} {
+  range {{ i.range_min }} {{ i.range_max }};
+  option domain-name-servers {{ i.dns_servers }};
+  option broadcast-address {{ i.broadcast_address }};
+  default-lease-time {{ i.default_lease_time }};
+  max-lease-time {{ i.max_lease_time }};
+}
+{% endfor %}
+
+
+{% for i in dhcpd_records %}
+host {{ i.hostname }} {
+  hardware ethernet {{ i.mac }};
+  fixed-address {{ i.host_ip }};
+}
+{% endfor %}
+

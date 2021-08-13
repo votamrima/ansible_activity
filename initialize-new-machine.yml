@@ -1,0 +1,12 @@
+---
+
+- name: tesr
+  hosts: dns
+  gather_facts: true
+
+  tasks:
+  - name: Add corresponding authorized_keys to each user
+    authorized_key:
+      user: admin
+      state: present
+      key: "{{ lookup ('file', pubkey) }}"  # pub_key is being passed throug -e parameter: ansible-playbook initialize-new-machine.yml --ask-pass -e pubkey=<home_folder_of_user>/.ssh/id_rsa.pub

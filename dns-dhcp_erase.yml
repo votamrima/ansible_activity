@@ -1,0 +1,34 @@
+---
+
+# install 
+- name: tesr
+  hosts: dns, dhcp
+  gather_facts: true
+
+  tasks:
+  - block:
+      - name: "Stop {{ dns_service_name }}"
+        service:
+          name: "{{ dns_service_name }}"
+          state: stopped
+          enabled: no
+
+      - name: "Erase {{ dns_packages }}"
+        yum:
+          name: "{{ dns_packages }}"
+          state: absent
+
+      - name: "Stop {{ dhcp_service_name }}"
+        service:
+          name: "{{ dhcp_service_name }}"
+          state: stopped
+          enabled: no
+
+      - name: "Erase {{ dhcp_packages }}"
+        yum:
+          name: "{{ dhcp_packages }}"
+          state: absent
+
+    become: true
+    ignore_errors: true
+

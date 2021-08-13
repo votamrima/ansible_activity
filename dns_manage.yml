@@ -1,0 +1,11 @@
+---
+
+# install 
+- name: Install and update DNS server
+  hosts: dns
+  gather_facts: true
+
+  roles:
+  - role: dns_manage
+
+

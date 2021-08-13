@@ -1,0 +1,70 @@
+#
+
+dhcp_packages: dhcp-server
+dhcp_service_name: dhcpd
+
+dhcp_subnets:
+  - subnet: 192.168.11.0
+    netmask: 255.255.255.0
+    dns_servers: 192.168.11.5
+    range_min: 192.168.11.50
+    range_max: 192.168.11.100
+    broadcast_address: 192.168.11.255
+    default_lease_time: 60
+    max_lease_time: 720
+    lalak: 'laklakatum'
+
+#domain: "home.lab"
+#dhcp_hostname: "dnsserver"
+
+dhcp_config_files:
+  - template_file: dhcpd.conf.j2
+    config_file: /etc/dhcp/dhcpd.conf
+
+#
+dhcpd_records:
+  - hostname: atest
+    host_ip: 192.168.11.78
+    mac: 00:0C:29:7F:36:DE
+  - hostname: okd4-services
+    host_ip: 192.168.11.51
+    mac: 00:50:56:2A:67:13
+  - hostname: api
+    host_ip: 192.168.11.51
+    mac: 00:50:56:2A:67:13
+  - hostname: api-int
+    host_ip: 192.168.11.51
+    mac: 00:50:56:2A:67:13
+#  - hostname: '*.apps'
+#    host_ip: 192.168.11.51            
+#    mac: 00:50:56:2A:67:13
+  - hostname: oauth-openshift
+    host_ip: 192.168.11.51            
+    mac: 00:50:56:2A:67:13
+  - hostname: console-openshift-console
+    host_ip: 192.168.11.51            
+    mac: 00:50:56:2A:67:13
+  - hostname: okd4-bootstrap
+    host_ip: 192.168.11.52
+    mac: 00:50:56:26:0C:BA
+  - hostname: okd4-control-plane-1
+    host_ip: 192.168.11.53
+    mac: 00:50:56:21:F6:02
+  - hostname: etcd-1
+    host_ip: 192.168.11.53
+    mac: 00:50:56:21:F6:02
+  - hostname: okd4-control-plane-2
+    host_ip: 192.168.11.54
+    mac: 00:50:56:38:A9:E6
+  - hostname: etcd-2
+    host_ip: 192.168.11.54
+    mac: 00:50:56:38:A9:E6
+  - hostname: okd4-control-plane-3
+    host_ip: 192.168.11.55
+    mac: 00:50:56:2F:0B:BC
+  - hostname: etcd-3
+    host_ip: 192.168.11.55
+    mac: 00:50:56:2F:0B:BC
+  - hostname: okd4-compute-1
+    host_ip: 192.168.11.56
+    mac: 00:50:56:3B:FC:5C

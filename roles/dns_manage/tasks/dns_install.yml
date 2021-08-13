@@ -1,0 +1,25 @@
+---
+- block:
+  - name: "Install dns server: {{ dns_packages }} using yum package manager"
+    yum:
+      name: "{{ dns_packages }}"
+      state: present
+  
+  - name: Apply configuration
+    template:
+      src: "{{ item.template_file }}"
+      dest: "{{ item.config_file }}"
+      owner: root
+      group: named
+      mode: '0640'
+    loop: "{{ dns_config_files }}"
+
+  - name: "Start {{ dns_service_name }} service "
+    service:
+      name: "{{ dns_service_name }}"
+      state: restarted
+      enabled: yes
+  become: true
+  #ignore_errors: true
+
+

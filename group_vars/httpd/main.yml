@@ -5,6 +5,7 @@ ansible-managed: "This file is managed by Ansible"
 
 additional_packages: 
   - policycoreutils-python-utils
+  - bind-utils
 
 # configuration for httpd
 httpd_packages:

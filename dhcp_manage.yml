@@ -1,0 +1,11 @@
+---
+
+# install 
+- name: tesr
+  hosts: dhcp
+  gather_facts: true
+
+  roles:
+  - role: dhcp_manage
+
+

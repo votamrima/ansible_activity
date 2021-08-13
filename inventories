@@ -6,3 +6,9 @@ serverd
 [nginx]
 serverd
 
+[dns]
+192.168.10.5
+
+[dhcp]
+192.168.10.5
+

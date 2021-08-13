@@ -1,0 +1,20 @@
+---
+
+- name: Test ansible fact
+  hosts: dns
+  gather_facts: true
+
+  tasks:
+  - debug:
+      var: "{{ item }}"
+    loop: 
+      - ansible_facts['distribution']
+      - ansible_all_ipv4_addresses
+
+#  - name: Set dns
+#    nmcli:
+#      type: ethernet
+#      dns4: '192.168.10.5'
+#      priority: 0
+#      state: present
+#    become: true
