@@ -1,12 +1,22 @@
 authoritative;
+ddns-update-style interim;
+allow booting;
+allow bootp;
+allow unknown-clients;
+ignore client-updates;
+default-lease-time 14400;
+max-lease-time 14400;
 
 {% for i in dhcp_subnets %}
 subnet {{ i.subnet }} netmask {{ i.netmask }} {
+  option subnet-mask  {{ i.netmask }};
   range {{ i.range_min }} {{ i.range_max }};
+  option domain-name      "{{ i.domain_name }}";
   option domain-name-servers {{ i.dns_servers }};
   option broadcast-address {{ i.broadcast_address }};
   default-lease-time {{ i.default_lease_time }};
   max-lease-time {{ i.max_lease_time }};
+  option routers {{ i.gateway }};
 }
 {% endfor %}
 

@@ -1,6 +1,6 @@
 zone {{ domain }}. IN {
-        type master;
-        file "/var/named/{{ domain }}.zone";
+  type master;
+  file "/var/named/{{ domain }}.zone";
 #        forwarders {};
 #        allow-update { none; };
 };
@@ -10,4 +10,15 @@ zone 10.168.192.in-addr.arpa. IN {
   file "/var/named/192.168.10.zone";
 #  forwarders {};
 #  allow-update { none; };
+};
+
+
+zone okd4.{{ domain }}. IN {
+  type master;
+  file "/var/named/okd4.{{ domain }}.zone";
+};
+
+zone 11.168.192.in-addr.arpa. IN {
+  type master;
+  file "/var/named/reverse.okd4.{{ domain }}.zone";
 };

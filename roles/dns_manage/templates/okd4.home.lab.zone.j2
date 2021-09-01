@@ -1,0 +1,46 @@
+$TTL 3600
+;$ORIGIN {{ domain }}.
+
+@       IN SOA  {{ dns_hostname }}.{{ domain }}. admin.{{ domain }}. (
+                                        2021050519      ; serial number
+                                        3600            ; refresh period
+                                        600             ; retry  period
+                                        604800          ; expire time
+                                        1800 )          ; negative ttl
+
+; owner         TTL     CL  type        RDATA
+               600     IN  NS          dnsserver
+;@                       IN NS           {{ dns_hostname }}.okd4.{{ domain }}
+
+; okd4 service and loadbalancer node:
+; Control nodes:
+{% for i in service_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+
+; Bootstrap node
+{% for i in bootstrap_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+
+; Control nodes:
+{% for i in master_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+; Worker nodes:
+{% for i in compute_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+; ETCD Cluster
+{% for i in etcd_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+; OpenShift Internal SRV records (cluster name = lab)
+{% for i in etcd_nodes %}
+_etcd-server-ssl._tcp.okd4.{{ domain }}.    86400     IN    SRV     0    10    2380   {{ i.hostname }}
+{% endfor %}

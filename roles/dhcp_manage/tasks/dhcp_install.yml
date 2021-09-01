@@ -10,8 +10,8 @@
       src: "{{ item.template_file }}"
       dest: "{{ item.config_file }}"
       owner: root
-      group: named
-      mode: '0640'
+      group: root
+      mode: '0644'
     loop: "{{ dhcp_config_files }}"
 
   - name: "Start {{ dhcp_service_name }} service "

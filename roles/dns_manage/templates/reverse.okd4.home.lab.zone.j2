@@ -1,0 +1,31 @@
+$TTL 300
+
+@       IN SOA  {{ dns_hostname }}.okd4.{{ domain }}. admin.{{ domain }}. (
+                                0       ; serial
+                                600      ; refresh
+                                360      ; retry
+                                604800   ; expire
+                                1800 )    ; minimum
+
+; owner         TTL     CL  type        RDATA
+                600     IN  NS          {{ dns_hostname }}.okd4.{{ domain }}.
+
+{% for i in service_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}
+
+{% for i in bootstrap_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}
+
+{% for i in master_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}
+
+{% for i in compute_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}
+
+{% for i in etcd_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}

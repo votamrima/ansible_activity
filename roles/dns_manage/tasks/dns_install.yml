@@ -19,6 +19,22 @@
       name: "{{ dns_service_name }}"
       state: restarted
       enabled: yes
+  
+  - name: Enable DNS port
+    firewalld:
+      port: "{{ item }}"
+      permanent: yes
+      state: enabled
+    loop:
+      - "53/tcp"
+      - "53/udp"
+
+  - name: Enable forwarding
+    firewalld:
+      masquerade: yes
+      state: enabled
+      permanent: yes
+
   become: true
   #ignore_errors: true
 
