@@ -3,9 +3,7 @@
 
 ansible-managed: "This file is managed by Ansible"
 
-basic_packages:
-  - policycoreutils-python-utils
-  - bind-utils
+basic_packages: [policycoreutils-python-utils, bind-utils, vim, traceroute]
 
 
 

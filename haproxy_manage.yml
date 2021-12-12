@@ -1,0 +1,9 @@
+---
+
+# install 
+- name: Install and update Haproxy server
+  hosts: haproxy-proxmox
+  gather_facts: true
+
+  roles:
+  - role: haproxy

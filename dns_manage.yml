@@ -2,7 +2,7 @@
 
 # install 
 - name: Install and update DNS server
-  hosts: dns
+  hosts: dns-proxmox
   gather_facts: true
 
   roles:

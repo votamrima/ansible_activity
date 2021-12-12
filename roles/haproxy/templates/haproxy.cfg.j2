@@ -1,0 +1,82 @@
+# Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     {{ global_maxconn }}
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 5200
+
+listen stats
+  bind "*:{{ stats_port }}"
+  mode            "{{ stats_mode }}"
+  log             "{{ stats_log }}"
+  maxconn 10
+  stats enable
+  stats hide-version
+  stats refresh 30s
+  stats show-node
+  stats show-desc Stats for ocp4 cluster 
+  stats auth admin:ocp4
+  stats uri {{ stats_uri }}
+
+listen api-server-{{ api_server_port }}
+    bind *:{{ api_server_port }}
+    mode {{ api_server_port_mode }}
+#    balance source
+{% for i in list_control_planes %}
+    server {{ i.name }}  {{ i.url }}:{{ api_server_port }} {{ i.additional_values }}
+{% endfor %}
+
+
+listen machine-config-server-{{ config_server_port }}
+    bind *:{{ config_server_port  }}
+    mode {{ config_server_port_mode }}
+{% for i in list_control_planes %}
+    server {{ i.name }}  {{ i.url }}:{{ config_server_port }} {{ i.additional_values }}
+{% endfor %}
+
+listen ingress-router-{{ ingress_router_port_ssl }}
+    bind *:{{ ingress_router_port_ssl }}
+    mode {{ ingress_router_port_ssl_mode }}
+{% for i in list_compute_nodes %}
+    server {{ i.name }}  {{ i.url }}:{{ ingress_router_port_ssl }} {{ i.additional_values }}
+{% endfor %}
+
+listen ingress-router-{{ ingress_router_port_nossl }} 
+    bind *:{{ ingress_router_port_nossl }}
+    mode {{ ingress_router_port_nossl_mode }}
+#    balance source
+{% for i in list_compute_nodes %}
+    server {{ i.name }}  {{ i.url }}:{{ ingress_router_port_nossl }} {{ i.additional_values }}
+{% endfor %}
+
+
+

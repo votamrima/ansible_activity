@@ -12,3 +12,16 @@ serverd
 [dhcp]
 192.168.241.151
 
+[dhcp]
+192.168.241.151
+
+
+### PROXMOX 
+[dns-proxmox]
+192.168.11.61
+
+[dhcp-proxmox]
+192.168.11.61
+
+[haproxy-proxmox]
+192.168.11.61

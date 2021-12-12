@@ -1,0 +1,42 @@
+---
+
+- block:
+  - name: "Install Haproxy server: {{ haproxy_packages }} using yum package manager"
+    yum:
+      name: "{{ haproxy_packages }}"
+      state: present
+  
+  - name: Apply configuration
+    template:
+      src: "{{ item.template_file }}"
+      dest: "{{ item.config_file }}"
+      owner: root
+      group: root
+      mode: '0640'
+    loop: "{{ haproxy_config_files }}"
+
+  - name: "Start {{ haproxy_service_name }} service "
+    service:
+      name: "{{ haproxy_service_name }}"
+      state: restarted
+      enabled: yes
+
+  - name: Activate Haproxy ports
+    firewalld:
+      port: "{{ item.port }}"
+      permanent: "{{ item.permanent }}"
+      state: "{{ item.state }}"
+    loop: "{{ haproxy_ports }}"
+
+  - name: Enable forwarding
+    firewalld:
+      masquerade: yes
+      state: enabled
+      permanent: yes
+
+  - name: Set haproxy_connect_any flag on and keep it persistent across reboots
+    seboolean:
+      name: haproxy_connect_any
+      state: yes
+      persistent: yes
+  become: true

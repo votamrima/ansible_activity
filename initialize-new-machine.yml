@@ -1,7 +1,7 @@
 ---
 
 - name: tesr
-  hosts: dns
+  hosts: dns-proxmox
   gather_facts: true
 
   tasks:
@@ -10,3 +10,15 @@
       user: admin
       state: present
       key: "{{ lookup ('file', pubkey) }}"  # pub_key is being passed throug -e parameter: ansible-playbook initialize-new-machine.yml --ask-pass -e pubkey=<home_folder_of_user>/.ssh/id_rsa.pub
+
+  - block:
+    - name: Insert proxy configuration to yum.conf file
+      lineinfile:
+        path: /etc/yum.conf
+        line: "proxy=http://192.168.11.51:3128"
+
+    - name: Install necessary packages
+      yum:
+        name: "{{ basic_packages }}"
+        state: present
+    become: true

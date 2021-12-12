@@ -1,0 +1,64 @@
+---
+
+haproxy_packages: [haproxy]
+
+haproxy_config_files:
+  - template_file: haproxy.cfg.j2
+    config_file: /etc/haproxy/haproxy.cfg
+
+haproxy_service_name: haproxy
+
+haproxy_ports: 
+  - port: "{{ stats_port }}/tcp"
+    state: enabled
+    permanent: yes
+  - port: "6443/tcp"
+    state: enabled
+    permanent: yes
+  - port: "22623/tcp"
+    state: enabled
+    permanent: yes
+  - port: "443/tcp"
+    state: enabled
+    permanent: yes
+  - port: "80/tcp"
+    state: enabled
+    permanent: yes
+
+
+### values for haproxy.cfg 
+global_maxconn: '5200'
+global_log: [/dev/log local0 info]
+
+stats_port: 9000
+stats_mode: http
+stats_log: global
+stats_uri: "/stats"
+
+list_control_planes:
+  - name: bootstrap
+    url: 'okd4-bootstrap.okd4.home.lab'
+    additional_values: 'check inter 1s backup'
+  - name: control-plane-1
+    url: 'okd4-control-plane-1.okd4.home.lab'
+    additional_values: 'check inter 1s'
+  - name: control-plane-2
+    url: 'okd4-control-plane-2.okd4.home.lab'
+    additional_values: 'check inter 1s'
+  - name: control-plane-3
+    url: 'okd4-control-plane-3.okd4.home.lab'
+    additional_values: 'check inter 1s'
+
+api_server_port: 6443
+api_server_port_mode: tcp
+config_server_port: 22623
+config_server_port_mode: tcp
+ingress_router_port_ssl: 443
+ingress_router_port_ssl_mode: tcp
+ingress_router_port_nossl: 80
+ingress_router_port_nossl_mode: tcp
+
+list_compute_nodes:
+  - name: compute-1
+    url: 'okd4-compute-1.okd4.home.lab'
+    additional_values: 'check inter 1s'
