@@ -10,7 +10,7 @@ $TTL 3600
 
 ; owner         TTL     CL  type        RDATA
                600     IN  NS          dnsserver
-;@                       IN NS           {{ dns_hostname }}.okd4.{{ domain }}
+;@                       IN NS           {{ dns_hostname }}.{{ ocp_suff }}.{{ domain }}
 
 ; okd4 service and loadbalancer node:
 ; Control nodes:
@@ -42,5 +42,5 @@ $TTL 3600
 
 ; OpenShift Internal SRV records (cluster name = lab)
 {% for i in etcd_nodes %}
-_etcd-server-ssl._tcp.okd4.{{ domain }}.    86400     IN    SRV     0    10    2380   {{ i.hostname }}
+_etcd-server-ssl._tcp.{{ ocp_suff }}.{{ domain }}.    86400     IN    SRV     0    10    2380   {{ i.hostname }}
 {% endfor %}

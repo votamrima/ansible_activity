@@ -37,16 +37,16 @@ stats_uri: "/stats"
 
 list_control_planes:
   - name: bootstrap
-    url: 'okd4-bootstrap.okd4.home.lab'
+    url: 'ocp-bootstrap.ocp.home.lab'
     additional_values: 'check inter 1s backup'
-  - name: control-plane-1
-    url: 'okd4-control-plane-1.okd4.home.lab'
+  - name: ocp-master-1
+    url: 'ocp-master-1.ocp.home.lab'
     additional_values: 'check inter 1s'
-  - name: control-plane-2
-    url: 'okd4-control-plane-2.okd4.home.lab'
+  - name: ocp-master-2
+    url: 'ocp-master-2.ocp.home.lab'
     additional_values: 'check inter 1s'
-  - name: control-plane-3
-    url: 'okd4-control-plane-3.okd4.home.lab'
+  - name: ocp-master-3
+    url: 'ocp-master-3.ocp.home.lab'
     additional_values: 'check inter 1s'
 
 api_server_port: 6443
@@ -59,6 +59,9 @@ ingress_router_port_nossl: 80
 ingress_router_port_nossl_mode: tcp
 
 list_compute_nodes:
-  - name: compute-1
-    url: 'okd4-compute-1.okd4.home.lab'
+  - name: ocp-worker-1
+    url: 'ocp-worker-1.ocp.home.lab'
+    additional_values: 'check inter 1s'
+  - name: ocp-worker-2
+    url: 'ocp-worker-2.ocp.home.lab'
     additional_values: 'check inter 1s'

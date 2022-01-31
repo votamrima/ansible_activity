@@ -13,12 +13,12 @@ zone 10.168.192.in-addr.arpa. IN {
 };
 
 
-zone okd4.{{ domain }}. IN {
+zone {{ ocp_suff }}.{{ domain }}. IN {
   type master;
-  file "/var/named/okd4.{{ domain }}.zone";
+  file "/var/named/{{ ocp_suff }}.{{ domain }}.zone";
 };
 
 zone 11.168.192.in-addr.arpa. IN {
   type master;
-  file "/var/named/reverse.okd4.{{ domain }}.zone";
+  file "/var/named/reverse.{{ ocp_suff }}.{{ domain }}.zone";
 };

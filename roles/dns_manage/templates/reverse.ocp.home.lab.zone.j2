@@ -1,6 +1,6 @@
 $TTL 300
 
-@       IN SOA  {{ dns_hostname }}.okd4.{{ domain }}. admin.{{ domain }}. (
+@       IN SOA  {{ dns_hostname }}.{{ ocp_suff }}.{{ domain }}. admin.{{ domain }}. (
                                 0       ; serial
                                 600      ; refresh
                                 360      ; retry
@@ -8,7 +8,7 @@ $TTL 300
                                 1800 )    ; minimum
 
 ; owner         TTL     CL  type        RDATA
-                600     IN  NS          {{ dns_hostname }}.okd4.{{ domain }}.
+                600     IN  NS          {{ dns_hostname }}.{{ ocp_suff }}.{{ domain }}.
 
 {% for i in service_nodes %}
 {{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.

@@ -15,7 +15,6 @@ listening_ips:
 
 domain: "home.lab"
 dns_hostname: "dnsserver"
-ocp_suff: "ocp"
 
 dns_config_files:
   - template_file: named.conf.j2
@@ -26,10 +25,10 @@ dns_config_files:
 #    config_file: /var/named/home.lab.zone
 #  - template_file: 192.168.10.zone.j2
 #    config_file: /var/named/192.168.10.zone
-  - template_file: ocp.home.lab.zone.j2
-    config_file: /var/named/ocp.home.lab.zone
-  - template_file: reverse.ocp.home.lab.zone.j2
-    config_file: /var/named/reverse.ocp.home.lab.zone    
+  - template_file: okd4.home.lab.zone.j2
+    config_file: /var/named/okd4.home.lab.zone
+  - template_file: reverse.okd4.home.lab.zone.j2
+    config_file: /var/named/reverse.okd4.home.lab.zone    
 
 ## It is not recommended to use "_". Use "-"
 dns_records:
@@ -48,65 +47,62 @@ service_nodes:
   - hostname: postgresdb
     host_ip: 192.168.11.62
     ip_last_oct: 62
-  - hostname: ovirt.ocp
+  - hostname: ovirt
     host_ip: 192.168.11.70
     ip_last_oct: 70
   - hostname: dns
     host_ip: 192.168.11.61
     ip_last_oct: 61    
-  - hostname: dnsserver.ocp
+  - hostname: dnsserver.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
-  - hostname: api.ocp
+  - hostname: api.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
-  - hostname: api-int.ocp
+  - hostname: api-int.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
-  - hostname: '*.apps.ocp'
+  - hostname: '*.apps.okd4'
     host_ip: 192.168.11.61
     ip_last_oct: ;61
-  - hostname: oauth-openshift.ocp
+  - hostname: oauth-openshift.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
-  - hostname: console-openshift-console.ocp
+  - hostname: console-openshift-console.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
-  - hostname: ocp-services.ocp
+  - hostname: okd4-services.okd4
     host_ip: 192.168.11.61
     ip_last_oct: 61
 
 bootstrap_nodes:
-  - hostname: ocp-bootstrap.ocp
+  - hostname: okd4-bootstrap.okd4
     host_ip: 192.168.11.66
     ip_last_oct: 66
 
 master_nodes:
-  - hostname: ocp-master-1.ocp
-    host_ip: 192.168.11.121
-    ip_last_oct: 121
-  - hostname: ocp-master-2.ocp
-    host_ip: 192.168.11.122
-    ip_last_oct: 122
-  - hostname: ocp-master-3.ocp
-    host_ip: 192.168.11.123
-    ip_last_oct: 123
+  - hostname: okd4-control-plane-1.okd4
+    host_ip: 192.168.11.111
+    ip_last_oct: 111
+  - hostname: okd4-control-plane-2.okd4
+    host_ip: 192.168.11.112
+    ip_last_oct: 112
+  - hostname: okd4-control-plane-3.okd4
+    host_ip: 192.168.11.113
+    ip_last_oct: 113
 
 compute_nodes:
-  - hostname: ocp-worker-1.ocp
-    host_ip: 192.168.11.124
-    ip_last_oct: 124
-  - hostname: ocp-worker-2.ocp
-    host_ip: 192.168.11.125
-    ip_last_oct: 125
-
-etcd_nodes:
-  - hostname: etcd-1.ocp
+  - hostname: okd4-compute-1.okd4
     host_ip: 192.168.11.121
     ip_last_oct: 121
-  - hostname: etcd-2.ocp
-    host_ip: 192.168.11.122
-    ip_last_oct: 122
-  - hostname: etcd-3.ocp
-    host_ip: 192.168.11.123
-    ip_last_oct: 123
+
+etcd_nodes:
+  - hostname: etcd-1.okd4
+    host_ip: 192.168.11.111
+    ip_last_oct: 111
+  - hostname: etcd-2.okd4
+    host_ip: 192.168.11.112
+    ip_last_oct: 112
+  - hostname: etcd-3.okd4
+    host_ip: 192.168.11.113
+    ip_last_oct: 113
