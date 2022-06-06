@@ -25,3 +25,21 @@ serverd
 
 [haproxy-proxmox]
 192.168.11.61
+
+
+[kubernetes]
+192.168.11.71
+192.168.11.73
+192.168.11.74
+
+[postgres]
+192.168.11.62
+
+[podman]
+192.168.11.63
+
+[stopgroup:children]
+kubernetes
+postgres
+podman
+

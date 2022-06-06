@@ -26,6 +26,13 @@ $TTL 300
 {{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
 {% endfor %}
 
-{% for i in etcd_nodes %}
+
+; kubernetes nodes
+{% for i in kubernetes_master_nodes %}
 {{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
 {% endfor %}
+
+{% for i in kubernetes_worker_nodes %}
+{{ i.ip_last_oct }}   IN  PTR         {{ i.hostname }}.{{ domain }}.
+{% endfor %}
+

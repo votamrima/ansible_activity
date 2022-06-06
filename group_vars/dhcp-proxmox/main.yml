@@ -27,28 +27,40 @@ dhcpd_records:
   - hostname: proxy
     host_ip: 192.168.11.51
     mac: 00:0C:29:D1:28:3F
-  - hostname: ovirt
-    host_ip: 192.168.11.70
-    mac: 56:31:86:12:6A:A2
-  - hostname: ocp-bootstrap
+  - hostname: bootstrap
     host_ip: 192.168.11.66
     mac: E2:4A:80:08:64:56
-  - hostname: ocp-master-1
+  - hostname: master1
     host_ip: 192.168.11.121
     mac: 22:63:8E:FB:5C:08
-  - hostname: ocp-master-2
+  - hostname: master2
     host_ip: 192.168.11.122
     mac: 46:F9:A5:28:B0:E4
-  - hostname: ocp-master-3
+  - hostname: master3
     host_ip: 192.168.11.123
     mac: A6:A4:C3:C7:8F:9E
-  - hostname: ocp-worker-1
+  - hostname: worker1
     host_ip: 192.168.11.124
     mac: 56:C2:AC:BD:1D:89
-  - hostname: ocp-worker-2
+  - hostname: worker2
     host_ip: 192.168.11.125
     mac: 5E:20:EF:D2:34:FB
   - hostname: postgres
     host_ip: 192.168.11.62
     mac: 4A:84:DA:FE:43:C4
+  - hostname: kube-master1
+    host_ip: 192.168.11.71
+    mac: 16:09:B8:3D:E3:D2
+  - hostname: kube-master2
+    host_ip: 192.168.11.72
+    mac: D2:F8:E2:81:36:3E
+  - hostname: kube-worker1
+    host_ip: 192.168.11.73
+    mac: 72:1D:3E:80:B6:4E
+  - hostname: kube-worker2
+    host_ip: 192.168.11.74
+    mac: 9E:00:CF:48:6C:92
+  - hostname: podman
+    host_ip: 192.168.11.63
+    mac: D6:B4:C7:5B:43:2B
     

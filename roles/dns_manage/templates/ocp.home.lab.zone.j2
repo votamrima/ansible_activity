@@ -36,11 +36,22 @@ $TTL 3600
 {% endfor %}
 
 ; ETCD Cluster
-{% for i in etcd_nodes %}
+{% for i in master_nodes %}
 {{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
 {% endfor %}
 
 ; OpenShift Internal SRV records (cluster name = lab)
-{% for i in etcd_nodes %}
+{% for i in master_nodes %}
 _etcd-server-ssl._tcp.{{ ocp_suff }}.{{ domain }}.    86400     IN    SRV     0    10    2380   {{ i.hostname }}
+{% endfor %}
+
+
+; kubernetes master nodes
+{% for i in kubernetes_master_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
+{% endfor %}
+
+; kubernetes worker nodes
+{% for i in kubernetes_worker_nodes %}
+{{ i.hostname }}.{{ domain }}.    IN    A     {{ i.host_ip }}
 {% endfor %}

@@ -1,0 +1,26 @@
+---
+
+# install 
+- name: Prepare machine to kubernetes
+  hosts: kubernetes
+  gather_facts: false
+#  vars_files:
+#    - ./credentials
+#
+
+#  roles:
+#  - role: system_prepare
+
+  tasks:
+  - block:
+    - name: Create kubernetes.conf
+      file:
+        path: /etc/sysctl.d/kubernetes.conf
+        
+    - name: Install necessary packages
+      yum:
+        name: "{{ basic_packages }}"
+        state: installed
+    become: true
+
+

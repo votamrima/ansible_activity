@@ -1,10 +1,12 @@
 ---
+
 - block:
   - name: "Install dhcp server: {{ dhcp_packages }} using yum package manager"
     yum:
       name: "{{ dhcp_packages }}"
       state: present
-  
+    tags: install_package
+
   - name: Apply configuration
     template:
       src: "{{ item.template_file }}"
@@ -13,12 +15,14 @@
       group: root
       mode: '0644'
     loop: "{{ dhcp_config_files }}"
+    tags: apply_config
 
   - name: "Start {{ dhcp_service_name }} service "
     service:
       name: "{{ dhcp_service_name }}"
       state: restarted
       enabled: yes
+    tags: restart_service
   become: true
   #ignore_errors: true
 

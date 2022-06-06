@@ -48,6 +48,12 @@ service_nodes:
   - hostname: postgresdb
     host_ip: 192.168.11.62
     ip_last_oct: 62
+  - hostname: podman.ocp
+    host_ip: 192.168.11.63
+    ip_last_oct: 63
+  - hostname: registry.ocp
+    host_ip: 192.168.11.63
+    ip_last_oct: 63    
   - hostname: ovirt.ocp
     host_ip: 192.168.11.70
     ip_last_oct: 70
@@ -60,6 +66,9 @@ service_nodes:
   - hostname: api.ocp
     host_ip: 192.168.11.61
     ip_last_oct: 61
+  - hostname: oauth-openshift.apps
+    host_ip: 192.168.11.61
+    ip_last_oct: 61    
   - hostname: api-int.ocp
     host_ip: 192.168.11.61
     ip_last_oct: 61
@@ -77,36 +86,53 @@ service_nodes:
     ip_last_oct: 61
 
 bootstrap_nodes:
-  - hostname: ocp-bootstrap.ocp
+  - hostname: bootstrap.ocp
     host_ip: 192.168.11.66
     ip_last_oct: 66
 
 master_nodes:
-  - hostname: ocp-master-1.ocp
+  - hostname: master1.ocp
     host_ip: 192.168.11.121
     ip_last_oct: 121
-  - hostname: ocp-master-2.ocp
+  - hostname: master2.ocp
     host_ip: 192.168.11.122
     ip_last_oct: 122
-  - hostname: ocp-master-3.ocp
-    host_ip: 192.168.11.123
-    ip_last_oct: 123
+#  - hostname: master3.ocp
+#    host_ip: 192.168.11.123
+#    ip_last_oct: 123
 
 compute_nodes:
-  - hostname: ocp-worker-1.ocp
+  - hostname: worker1.ocp
     host_ip: 192.168.11.124
     ip_last_oct: 124
-  - hostname: ocp-worker-2.ocp
+  - hostname: worker2.ocp
     host_ip: 192.168.11.125
     ip_last_oct: 125
 
-etcd_nodes:
-  - hostname: etcd-1.ocp
-    host_ip: 192.168.11.121
-    ip_last_oct: 121
-  - hostname: etcd-2.ocp
-    host_ip: 192.168.11.122
-    ip_last_oct: 122
-  - hostname: etcd-3.ocp
-    host_ip: 192.168.11.123
-    ip_last_oct: 123
+kubernetes_master_nodes:
+  - hostname: kube-master1.ocp
+    host_ip: 192.168.11.71
+    ip_last_oct: 71
+  - hostname: kube-master2.ocp
+    host_ip: 192.168.11.72
+    ip_last_oct: 72
+
+kubernetes_worker_nodes:
+  - hostname: kube-worker1.ocp
+    host_ip: 192.168.11.73
+    ip_last_oct: 73
+  - hostname: kube-worker2.ocp
+    host_ip: 192.168.11.74
+    ip_last_oct: 74
+
+
+#etcd_nodes:
+#  - hostname: etcd-1.ocp
+#    host_ip: 192.168.11.121
+#    ip_last_oct: 121
+#  - hostname: etcd-2.ocp
+#    host_ip: 192.168.11.122
+#    ip_last_oct: 122
+#  - hostname: etcd-3.ocp
+#    host_ip: 192.168.11.123
+#    ip_last_oct: 123
